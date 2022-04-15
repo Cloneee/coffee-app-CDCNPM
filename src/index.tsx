@@ -6,27 +6,28 @@ import { store } from "./app/store";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
-import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-export const themeOptions: ThemeOptions = {
+const theme = createTheme({
   palette: {
-    type: 'light',
     primary: {
       main: '#feaa39',
       light: '#f7b256',
       dark: '#fb9d1f',
     },
     secondary: {
-      main: '#ee571c',
+      main: '#d7313b',
     },
   },
-};
+});
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
