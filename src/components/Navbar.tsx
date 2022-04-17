@@ -12,7 +12,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import isAuth from "./../../app/isAuth";
+import isAuth from "../app/isAuth";
 
 export function Navbar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -44,6 +44,22 @@ export function Navbar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleLogin = () => {
+    handleMenuClose();
+    navigate("/login");
+  };
+
+  const handleProfile = () => {
+    handleMenuClose();
+    navigate("/profile");
+  };
+
+  const handleLogout = () => {
+    handleMenuClose();
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
   const textButton = {
     ml: 2,
     "&:hover": {
@@ -70,12 +86,12 @@ export function Navbar() {
       onClose={handleMenuClose}
     >
       {!isAuth() ? (
-        <MenuItem onClick={handleMenuClose}>Đăng nhập</MenuItem>
+        <MenuItem onClick={handleLogin}>Đăng nhập</MenuItem>
       ) : (
-        <React.Fragment>
-          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>{" "}
-          <MenuItem onClick={handleMenuClose}>Đăng xuất</MenuItem>
-        </React.Fragment>
+        [
+          <MenuItem onClick={handleProfile}>Profile</MenuItem>,
+          <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>,
+        ]
       )}
     </Menu>
   );
@@ -138,7 +154,7 @@ export function Navbar() {
                 cursor: "pointer",
               },
             }}
-            onClick={() => handleRedirect("/")}
+            onClick={handleRedirect.bind(null, "/")}
           >
             The Coffee Home
           </Typography>
@@ -150,7 +166,7 @@ export function Navbar() {
               noWrap
               component="div"
               sx={textButton}
-              onClick={handleRedirect.bind(null, "/product")}
+              onClick={handleRedirect.bind(null, "/")}
             >
               Đặt hàng
             </Typography>

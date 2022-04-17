@@ -4,7 +4,7 @@ import { Typography } from "@mui/material";
 
 export function Footer() {
   return (
-    <Box sx={{ flexGrow: 1, minHeight: "12vh", backgroundColor: "#202124", mt: 2 }}>
+    <Box sx={{ flexGrow: 1, minHeight: "12vh", backgroundColor: "#202124", mt: 10}}>
       <Box sx={{ display: "flex" }}>
         <Typography
           variant="h5"

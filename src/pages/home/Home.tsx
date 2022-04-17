@@ -10,7 +10,7 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import { Item } from "../../components/item/Item";
+import { Item } from "../../components/Item";
 const style = {
   button: { display: "flex", flexDirection: "column" },
 };
@@ -18,51 +18,63 @@ const style = {
 const example = [
   {
     name: "Coffee",
-    price: 123,
+    price: 27000,
+    id: "abcxyz"
   },
   {
     name: "Tea",
-    price: 123,
+    price: 27000,
+    id: "abcxyz"
   },
   {
     name: "Bear",
-    price: 123,
+    price: 27000,
+    id: "abcxyz"
   },
   {
     name: "Coffee",
-    price: 123,
+    price: 27000,
+    id: "abcxyz"
   },
   {
     name: "Tea",
-    price: 123,
+    price: 27000,
+    id: "abcxyz"
   },
   {
     name: "Bear",
-    price: 123,
+    price: 27000,
+    id: "abcxyz"
   },
   {
     name: "Coffee",
-    price: 123,
+    price: 27000,
+    id: "abcxyz"
   },
   {
     name: "Tea",
-    price: 123,
+    price: 27000,
+    id: "abcxyz"
   },
   {
     name: "Bear",
-    price: 123,
+    price: 27000,
+    id: "abcxyz"
   },
   {
     name: "Coffee",
-    price: 123,
+    price: 27000,
+    id: "abcxyz"
   },
   {
     name: "Tea",
-    price: 123,
+    price: 27000,
+    id: "abcxyz"
   },
   {
     name: "Bear",
-    price: 123,
+    price: 27000,
+    id: "abcxyz"
   },
 ];
 
@@ -150,9 +162,17 @@ export function Home() {
         </Button>
       </Box>
       {/* List items  */}
-      <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-around",
+          rowGap: 3,
+          columnGap: 2
+        }}
+      >
         {example.map((el, id) => {
-          return <Item props={el} key={id}/>;
+          return <Item props={el} key={id} />;
         })}
       </Box>
     </Container>
