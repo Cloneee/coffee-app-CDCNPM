@@ -7,8 +7,9 @@ import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { Login } from "./pages/user/Login";
 import { Register } from "./pages/user/Register";
-import { Box } from "@mui/material";
 import { Profile } from "./pages/user/Profile";
+import { Cart } from "./pages/cart/Cart";
+import { Error } from "./Error";
 
 function App() {
   return (
@@ -21,7 +22,9 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/profile" element={<Profile />} />
+          <Route path="/cart" element={<Cart />} />
         </Route>
+        <Route path="*" element={<Error />}/>
       </Routes>
       <Footer />
     </div>

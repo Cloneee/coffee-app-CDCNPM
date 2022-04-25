@@ -22,7 +22,6 @@ const LoginButton = styled(Button)({
 
 export function Profile() {
   let navigate = useNavigate();
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [fname, setFname] = useState("");

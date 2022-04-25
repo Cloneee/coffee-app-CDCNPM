@@ -10,7 +10,7 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import { Item } from "../../components/Item";
+import { Item } from "./components/Item";
 const style = {
   button: { display: "flex", flexDirection: "column" },
 };

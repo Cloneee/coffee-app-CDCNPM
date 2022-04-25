@@ -27,7 +27,7 @@ export function Item(data: any) {
     >
       <CardContent sx={{ p: 1 }}>
         <Image src="https://minio.thecoffeehouse.com/image/admin/1639377738_ca-phe-sua-da_400x400.jpg" style={{"width": "125px"}}/>
-        <Typography gutterBottom variant="h6" component="div">
+        <Typography variant="body1" sx={{mt: 1, fontWeight: 500}}>
           {data.props.name}
         </Typography>
       </CardContent>

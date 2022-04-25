@@ -140,9 +140,9 @@ export function Navbar() {
     </Menu>
   );
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
+    <Box sx={{ flexGrow: 1}}>
+      <AppBar position="static" sx={{px: 25}}>
+        <Toolbar >
           <Typography
             variant="h5"
             noWrap
@@ -213,7 +213,7 @@ export function Navbar() {
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={69} color="error" onClick={handleRedirect.bind(null, "/cart")}>
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
