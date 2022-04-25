@@ -38,17 +38,20 @@ export function Register() {
   const handleChangeLname = (e: React.ChangeEvent<HTMLInputElement>) =>{
     setLname(e.currentTarget.value);
   }
-  const handleRegister = () => {
-    navigate("/register");
+  const handleLogin = () => {
+    navigate("/login");
   };
   const handleSubmit = (e: any) => {
     e.preventDefault();
     localStorage.setItem("token", "abcxyzTokenExemple");
+
+    // TODO Gọi api Login, nhận token và set state login == true
+
     const user = {
-      email: email,
+      user: email,
       password: password,
     };
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("infoUser", JSON.stringify(user));
     navigate("/");
   };
   return (
@@ -101,9 +104,9 @@ export function Register() {
           type="password"
         />
         <LoginButton variant="contained" fullWidth type="submit">
-          Đăng nhập
+          Đăng ký
         </LoginButton>
-        <Divider flexItem>Chưa có tài khoản?</Divider>
+        <Divider flexItem>Đã có tài khoản?</Divider>
         <LoginButton
           variant="contained"
           fullWidth
@@ -112,9 +115,9 @@ export function Register() {
             backgroundColor: "secondary.main",
             "&:hover": { backgroundColor: "secondary.light" },
           }}
-          onClick={handleRegister}
+          onClick={handleLogin}
         >
-          Đăng ký
+          Đăng nhập
         </LoginButton>
       </Container>
     </form>

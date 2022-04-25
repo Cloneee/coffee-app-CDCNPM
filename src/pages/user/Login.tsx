@@ -1,7 +1,6 @@
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import {
   Avatar,
-  Box,
   Button,
   Container,
   Divider,
@@ -35,12 +34,15 @@ export function Login() {
   };
   const handleSubmit = (e: any) => {
     e.preventDefault();
+
+    // TODO Gọi api Login, nhận token và set state login == true
+
     localStorage.setItem("token", "abcxyzTokenExemple");
     const user = {
-      email: email,
+      username: email,
       password: password,
     };
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("infoUser", JSON.stringify(user));
     navigate("/");
   };
   return (
