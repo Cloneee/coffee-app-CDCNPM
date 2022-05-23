@@ -10,6 +10,9 @@ import {
 import { styled } from "@mui/material/styles";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {authAPI, userAPI} from "../../api"
+import { useAppDispatch } from "../../app/hooks";
+import { userActions } from "./userSlice";
 
 const LoginButton = styled(Button)({
   boxShadow: "none",
@@ -20,7 +23,8 @@ const LoginButton = styled(Button)({
 });
 
 export function Login() {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,17 +36,12 @@ export function Login() {
   const handleRegister = () => {
     navigate("/register");
   };
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-
-    // TODO Gọi api Login, nhận token và set state login == true
-
-    localStorage.setItem("token", "abcxyzTokenExemple");
-    const user = {
-      username: email,
-      password: password,
-    };
-    localStorage.setItem("infoUser", JSON.stringify(user));
+    const resp = await authAPI.login({username: email, password: password})
+    localStorage.setItem("token", resp.token);
+    const info = await userAPI.getInfo(resp.id);
+    dispatch(userActions.setUserInfo(info));
     navigate("/");
   };
   return (

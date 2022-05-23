@@ -11,6 +11,7 @@ import {
 import { styled } from "@mui/material/styles";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {authAPI} from "../../api"
 
 const LoginButton = styled(Button)({
   boxShadow: "none",
@@ -24,6 +25,7 @@ export function Register() {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,24 +34,25 @@ export function Register() {
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.currentTarget.value);
   };
-  const handleChangeFname = (e: React.ChangeEvent<HTMLInputElement>) =>{
+  const handleChangeRePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRePassword(e.currentTarget.value);
+  };
+  const handleChangeFname = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFname(e.currentTarget.value);
-  }
-  const handleChangeLname = (e: React.ChangeEvent<HTMLInputElement>) =>{
+  };
+  const handleChangeLname = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLname(e.currentTarget.value);
-  }
+  };
   const handleLogin = () => {
     navigate("/login");
   };
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    localStorage.setItem("token", "abcxyzTokenExemple");
-
-    // TODO Gọi api Login, nhận token và set state login == true
-
+    const resp = await authAPI.register({email: email, password: password, name: fname +" " + lname})
+    
+    localStorage.setItem("token", resp.token);
     const user = {
-      user: email,
-      password: password,
+      name: resp.name
     };
     localStorage.setItem("infoUser", JSON.stringify(user));
     navigate("/");
@@ -71,7 +74,7 @@ export function Register() {
           <LockOutlinedIcon sx={{ color: "white" }} />
         </Avatar>
         <Typography variant="h4">Register</Typography>
-        <Box sx={{display: "flex", gap: 2}}>
+        <Box sx={{ display: "flex", gap: 2 }}>
           <TextField
             fullWidth
             id="fname"
@@ -103,7 +106,16 @@ export function Register() {
           onChange={handleChangePassword}
           type="password"
         />
-        <LoginButton variant="contained" fullWidth type="submit">
+        <TextField
+          fullWidth
+          id="password"
+          label="RePassword"
+          value={rePassword}
+          onChange={handleChangeRePassword}
+          type="password"
+          error={password === rePassword ? false : true}
+        />
+        <LoginButton variant="contained" fullWidth type="submit" disabled={password === rePassword? false: true}>
           Đăng ký
         </LoginButton>
         <Divider flexItem>Đã có tài khoản?</Divider>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import AccountCircle from "@mui/icons-material/AccountCircle";
@@ -13,16 +13,18 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import isAuth from "../app/isAuth";
+import { useAppSelector } from "../app/hooks";
 
 export function Navbar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     useState<null | HTMLElement>(null);
-
+  
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const cartNumber = useAppSelector(state => state.cart.cartNumber);
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const handleRedirect = (path: any) => {
     navigate(path);
   };
@@ -116,10 +118,11 @@ export function Navbar() {
       <MenuItem>
         <IconButton
           size="large"
-          aria-label="show 17 new notifications"
+          aria-label="show cartNumber"
           color="inherit"
+          onClick={handleRedirect.bind(null, "/cart")}
         >
-          <Badge badgeContent={17} color="error">
+          <Badge badgeContent={cartNumber} color="error">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
@@ -140,9 +143,9 @@ export function Navbar() {
     </Menu>
   );
   return (
-    <Box sx={{ flexGrow: 1}}>
-      <AppBar position="static" sx={{px: 25}}>
-        <Toolbar >
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static" sx={{ px: 25 }}>
+        <Toolbar>
           <Typography
             variant="h5"
             noWrap
@@ -210,10 +213,14 @@ export function Navbar() {
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               size="large"
-              aria-label="show 17 new notifications"
+              aria-label="show cartNumber"
               color="inherit"
             >
-              <Badge badgeContent={69} color="error" onClick={handleRedirect.bind(null, "/cart")}>
+              <Badge
+                badgeContent={cartNumber}
+                color="error"
+                onClick={handleRedirect.bind(null, "/cart")}
+              >
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>

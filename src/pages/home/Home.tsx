@@ -1,84 +1,31 @@
-// import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import CoffeeIcon from "@mui/icons-material/Coffee";
-import SearchIcon from "@mui/icons-material/Search";
-import {
-  Avatar,
-  Box,
-  Button,
-  Container,
-  IconButton,
-  Typography,
-} from "@mui/material";
-import { Item } from "./components/Item";
+import CoffeeIcon from '@mui/icons-material/Coffee';
+import SearchIcon from '@mui/icons-material/Search';
+import { Avatar, Box, Button, Container, IconButton, Typography } from '@mui/material';
+
+import { productAPI } from '../../api';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { IProduct } from '../../models';
+import { cartActions, fetchProducts } from '../cart/cartSlice';
+import { Item } from './components/Item';
+
 const style = {
   button: { display: "flex", flexDirection: "column" },
 };
 
-const example = [
-  {
-    name: "Coffee",
-    price: 27000,
-    id: "abcxyz"
-  },
-  {
-    name: "Tea",
-    price: 27000,
-    id: "abcxyz"
-  },
-  {
-    name: "Bear",
-    price: 27000,
-    id: "abcxyz"
-  },
-  {
-    name: "Coffee",
-    price: 27000,
-    id: "abcxyz"
-  },
-  {
-    name: "Tea",
-    price: 27000,
-    id: "abcxyz"
-  },
-  {
-    name: "Bear",
-    price: 27000,
-    id: "abcxyz"
-  },
-  {
-    name: "Coffee",
-    price: 27000,
-    id: "abcxyz"
-  },
-  {
-    name: "Tea",
-    price: 27000,
-    id: "abcxyz"
-  },
-  {
-    name: "Bear",
-    price: 27000,
-    id: "abcxyz"
-  },
-  {
-    name: "Coffee",
-    price: 27000,
-    id: "abcxyz"
-  },
-  {
-    name: "Tea",
-    price: 27000,
-    id: "abcxyz"
-  },
-  {
-    name: "Bear",
-    price: 27000,
-    id: "abcxyz"
-  },
-];
-
 export function Home() {
+  const dispatch = useAppDispatch();
+  const [category, setCategory] = useState("CAT6758042");
+  const handleCategoryChange = (category: string) => {
+    setCategory(category);
+  }
+  const products = useAppSelector(state => state.cart.products);
+  useEffect(() => {
+    if(products.length === 0){
+      dispatch(fetchProducts())
+    }
+  }, [])
   return (
     <Container maxWidth="lg">
       {/* Search  */}
@@ -100,7 +47,7 @@ export function Home() {
       </Box>
       {/* Category */}
       <Box sx={{ display: "flex", justifyContent: "space-around", mt: 2 }}>
-        <Button sx={style.button}>
+        <Button sx={style.button} onClick={()=>handleCategoryChange("CAT6758042")}>
           <Avatar
             alt="coffee"
             src="https://minio.thecoffeehouse.com/image/tch-web-order/category-thumbnails/ca-phe.png"
@@ -110,7 +57,7 @@ export function Home() {
             Coffee
           </Typography>
         </Button>
-        <Button sx={style.button}>
+        <Button sx={style.button} onClick={()=>handleCategoryChange("CAT8349176")}>
           <Avatar
             alt="tea"
             src="https://minio.thecoffeehouse.com/image/tch-web-order/category-thumbnails/tra-trai-cay-tra-sua.png"
@@ -120,7 +67,7 @@ export function Home() {
             Milk Tea
           </Typography>
         </Button>
-        <Button sx={style.button}>
+        <Button sx={style.button} onClick={()=>handleCategoryChange("CAT1480693")}>
           <Avatar
             alt="hi-tea"
             src="https://minio.thecoffeehouse.com/image/tch-web-order/category-thumbnails/hi-tea.png"
@@ -130,7 +77,7 @@ export function Home() {
             Fruit Tea
           </Typography>
         </Button>
-        <Button sx={style.button}>
+        <Button sx={style.button} onClick={()=>handleCategoryChange("CAT6521498")}>
           <Avatar
             alt="ice"
             src="https://minio.thecoffeehouse.com/image/tch-web-order/category-thumbnails/da-xa.png"
@@ -140,7 +87,7 @@ export function Home() {
             Blending
           </Typography>
         </Button>
-        <Button sx={style.button}>
+        <Button sx={style.button} onClick={()=>handleCategoryChange("CAT0632718")}>
           <Avatar
             alt="packed"
             src="https://minio.thecoffeehouse.com/image/tch-web-order/category-thumbnails/ca-phe-goi-ca-phe-uong-lien.png"
@@ -150,7 +97,7 @@ export function Home() {
             Packed
           </Typography>
         </Button>
-        <Button sx={style.button}>
+        <Button sx={style.button} onClick={()=>handleCategoryChange("CAT0372198")}>
           <Avatar
             alt="snack"
             src="https://minio.thecoffeehouse.com/image/tch-web-order/category-thumbnails/banh-snack.png"
@@ -168,11 +115,13 @@ export function Home() {
           flexWrap: "wrap",
           justifyContent: "space-around",
           rowGap: 3,
-          columnGap: 2
+          columnGap: 2,
         }}
       >
-        {example.map((el, id) => {
-          return <Item props={el} key={id} />;
+        {products.map((el, id) => {
+          if (category === el.categoryId){
+            return <Item props={el} key={id} />;
+          }
         })}
       </Box>
     </Container>
